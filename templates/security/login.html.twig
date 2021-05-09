@@ -1,0 +1,39 @@
+{% extends 'solo.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    <main class="form-signin">
+        <form method="post">
+            <img class="mb-4" src="{{ asset('images/website/logo.png') }}" alt="WebLabs" width="150" height="150">
+            <h1 class="h3 mb-3 fw-normal">Connexion</h1>
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %}
+            <div class="form-floating">
+                <input type="email" value="{{ last_username }}" name="email" class="form-control" autocomplete="email" required autofocus id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">Email:</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" name="password" autocomplete="current-password" required class="form-control" id="floatingPassword" placeholder="Mot de passe">
+                <label for="floatingPassword">Mot de passe:</label>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me"> Se souvenir de moi
+                </label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Connexion</button>
+            <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a><br/>
+            <a href="{{ path('app_register') }}">Créer un compte</a>
+            <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+        </form>
+    </main>
+{% endblock %}
